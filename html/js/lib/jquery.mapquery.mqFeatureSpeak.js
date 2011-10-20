@@ -2,16 +2,7 @@
 
 $.widget("mapQuery.mqFeatureSpeak", {
     options: {
-        // The MapQuery instance
-        map: undefined,
-
-        // A function that returns HTML to be put into the popup.
-        // It has one argument, which is the OpenLayers feature that
-        // was selected.
-        contents: undefined,
-
-        // Title that will be displayed at the top of the feature info
-        title: "Feature information"
+        eventName : "_featurehover"
     },
     _create: function() {
         var map;
@@ -19,22 +10,36 @@ $.widget("mapQuery.mqFeatureSpeak", {
         var element = this.element;
 
         //get the mapquery object
-        map = $(this.element).data('mapQuery');
+        map = $(element).data('mapQuery');
 
         var layers = $.map(map.layers(), function(layer) {
             return layer.isVector ? layer : null;
         });
+
+
+
+        var current_feature = null;
+
+        var feature_over = function() {
+            if (current_feature) {
+                $(element).trigger(self.options.eventName, [current_feature]);
+            }
+        }
+
+        var debounced_feature_over = _.debounce(feature_over, 1000);
 
         $.each(layers, function() {
             var layer = this;
 
             var featuremouseover = function(e) {
                 //console.log(e.feature.data);
+                current_feature = e.feature.data;
+                debounced_feature_over();
 
             };
 
             var featuremouseout = function(e) {
-
+                current_feature = null;
             }
 
 

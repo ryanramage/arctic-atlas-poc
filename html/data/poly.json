@@ -8,7 +8,23 @@
                 "coordinates" : [-114.37, 62.45]
              },
             "properties" : {
-                "name" : "Yellowknife"
+                "name" : "Yellowknife",
+                "start" : 35,
+                "duration" : 2
+            }
+
+
+        },
+        {
+            "type" : "Feature",
+            "geometry" : {
+                "type" : "Point",
+                "coordinates" : [-112.37, 62.45]
+             },
+            "properties" : {
+                "name" : "Other",
+                "start" : 65,
+                "duration" : 2
             }
 
 

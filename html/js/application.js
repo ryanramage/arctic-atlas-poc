@@ -79,7 +79,7 @@ $(document).ready(function(){
   $(".copy-code").focus(function() {
     var el = this;
     // push select to event loop for chrome :{o
-    setTimeout(function () { $(el).select(); }, 1);
+    setTimeout(function () {$(el).select();}, 1);
   });
 
 
@@ -124,5 +124,51 @@ $(document).ready(function(){
     $twipsy.css(offset[type])
 
   });
+  var map = $('#map').mapQuery({
+        layers:[{         //add layers to your map; you need to define at least one to be able to see anything on the map
+               type: 'WMTS',
+                label: 'naturalearth',
+                url: 'data/wmts/1.0.0/NE1_HR_LC_SR_W_DR/default/10m'
+
+            },{
+                type: 'JSON',
+                label: 'Polygons',
+                url: 'data/poly.json'
+            }
+         ]
+    });
+    $('.zoom').mqZoomButtons({map: $('#map')});
+    $('#map').mqFeatureSpeak({
+
+    });
+
+  var lp1 = $('#language1Player').jPlayer( {
+        swfPath: "js/lib",
+        ready: function () {
+          $(this).jPlayer("setMedia", {
+                mp3: "http://yoyodyne.cc/audio/nitotmozilla_da-m.mp3"
+          });
+        }
+
+  });
+
+
+  map.bind('_featurehover', function(event, feature_data) {
+      if (feature_data && feature_data.start) {
+          lp1.jPlayer('play', feature_data.start);
+          var duration = 10;
+          if (feature_data.duration) duration = feature_data.duration;
+
+          var stopPlaying = function() {
+              lp1.jPlayer('pause');
+          }
+          setTimeout(stopPlaying, duration * 1000);
+
+
+      }
+  })
+
+
+
 
 });
