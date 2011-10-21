@@ -682,8 +682,25 @@ _version added 0.1_
                     $.fn.mapQuery.defaults.layer.vector,
                     options);
             this.isVector = true;
+
+
+            var params = {
+                protocol: new OpenLayers.Protocol['HTTP']({
+                    url: o.url,
+                    format: new OpenLayers.Format.KML({
+                        extractStyles: false,
+                        extractAttributes: true,
+                        maxDepth: 2
+                    })
+                }),
+                strategies: [new OpenLayers.Strategy.Fixed(),
+                        new OpenLayers.Strategy.Cluster()
+                    ],
+                projection: o.projection || 'EPSG:4326'
+            };
+
             return {
-                layer: new OpenLayers.Layer.Vector(o.label),
+                layer: new OpenLayers.Layer.Vector(o.label, params),
                 options: o
             };
         },

@@ -134,9 +134,23 @@ $(document).ready(function(){
                 type: 'JSON',
                 label: 'Polygons',
                 url: 'data/poly.json'
+            }, {
+                type: 'vector',
+                label: 'KML',
+                url : "data/nunavutPlaces.kml",
+                options: {format: new OpenLayers.Format.KML({
+                            extractStyles: true,
+                            extractAttributes: true,
+                            maxDepth: 2
+                        })}
             }
+            
          ]
     });
+
+
+
+
     $('.zoom').mqZoomButtons({map: $('#map')});
     $('#map').mqFeatureSpeak({
 
@@ -154,12 +168,15 @@ $(document).ready(function(){
 
 
   map.bind('_featurehover', function(event, feature_data) {
+
+      console.log(feature_data);
       if (feature_data && feature_data.start) {
           lp1.jPlayer('play', feature_data.start);
           var duration = 10;
           if (feature_data.duration) duration = feature_data.duration;
 
           var stopPlaying = function() {
+              
               lp1.jPlayer('pause');
           }
           setTimeout(stopPlaying, duration * 1000);

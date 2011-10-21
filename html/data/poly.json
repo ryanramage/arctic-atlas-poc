@@ -10,10 +10,8 @@
             "properties" : {
                 "name" : "Yellowknife",
                 "start" : 35,
-                "duration" : 2
+                "duration" : 1
             }
-
-
         },
         {
             "type" : "Feature",
@@ -24,10 +22,8 @@
             "properties" : {
                 "name" : "Other",
                 "start" : 65,
-                "duration" : 2
+                "duration" : 1
             }
-
-
         }
     ]
 }
